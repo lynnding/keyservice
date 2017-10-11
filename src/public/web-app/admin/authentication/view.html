@@ -1,0 +1,196 @@
+<md-content layout-margin>
+	<md-content md-whiteframe="5">
+		<md-toolbar class="md-hue-2" style="height: 40px;min-height: 40px;">
+			<div class="md-toolbar-tools">
+				<span translate="authentication.method"></span>
+			</div>
+		</md-toolbar>
+		<md-content layout-padding>
+<md-radio-group ng-model="method" layout="row">
+			<md-radio-button ng-repeat="d in methods" ng-value="d.value" >  {{ d.label }}
+			</md-radio-button>
+</md-radio-group>
+<!--
+<span style="padding-left: 100px">
+<md-button href="/admin/help/" target=_blank class="md-primary md-raised">Help</md-button>
+</span>
+-->
+		</md-content>
+	</md-content>
+	<div ng-show="method=='aad'">
+		<div layout="row" style="margin:15px 0 20px 0">
+			<md-content md-whiteframe="5" flex="50" style="margin-right: 10px;">
+				<md-toolbar class="md-hue-2" style="height: 40px;min-height: 40px;">
+					<div class="md-toolbar-tools">
+						<span>URLs</span>
+					</div>
+				</md-toolbar>
+				<md-content layout-padding>
+					<md-input-container class="md-block flex-gt-sm md-input-focused">
+						<label for="azureAdSignin" translate="authentication.azureAd.signinURL"></label>
+						<span id="azureAdSignin" disabled="disabled">{{admin.azureAd.signin}}</span>
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm md-input-focused">
+						<label for="azureAdCallback" translate="authentication.azureAd.callbackURL"></label>
+						<span id="azureAdCallback" disabled="disabled">{{admin.azureAd.callback}}</span>
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm md-input-focused">
+						<label for="azureAdLogout" translate="authentication.azureAd.logoutURL"></label>
+						<span id="azureAdLogout" disabled="disabled">{{admin.azureAd.logout}}</span>
+					</md-input-container>
+				</md-content>
+			</md-content>
+			<md-content md-whiteframe="5" flex="50" style="margin-left: 10px;">
+				<md-toolbar class="md-hue-2" style="height: 40px;min-height: 40px;">
+					<div class="md-toolbar-tools">
+						<span>Access Rules</span>
+					</div>
+				</md-toolbar>
+				<md-content layout-padding layout="column">
+					<md-input-container style="margin: 0;">
+						<md-checkbox class='md-primary' ng-model="admin.azureAd.allowExternalUsers" aria-label="allowExternalUsers">
+							<span translate="authentication.azureAd.external"></span><span>: {{admin.azureAd.allowExternalUsers || false}}</span>
+						</md-checkbox>
+					</md-input-container>
+					<md-input-container style="margin: 0;">
+						<md-checkbox class='md-primary' ng-model="admin.azureAd.unlicensedFilter" aria-label="allowLicensedUsers">
+							<span translate="authentication.azureAd.unlicensed"></span><span>: {{admin.azureAd.unlicensedFilter || false}}</span>
+						</md-checkbox>
+					</md-input-container>
+					<md-container layout="column">
+						<md-input-container style="margin: 0;">
+							<md-checkbox class='md-primary' ng-model="admin.azureAd.userGroupsFilter" aria-label="allowExternalUsers">
+								<span translate="authentication.azureAd.groupsFilter"></span><span>:</span>
+							</md-checkbox>
+						</md-input-container>
+						<md-chips ng-class="{'chips_disabled': !admin.azureAd.userGroupsFilter}" ng-model="admin.azureAd.userGroups" md-separator-keys="customKeys" readonly="!admin.azureAd.userGroupsFilter"></md-chips>
+					</md-container>
+				</md-content>
+			</md-content>
+		</div>
+		<md-content md-whiteframe="5">
+			<md-toolbar class="md-hue-2" style="height: 40px;min-height: 40px;">
+				<div class="md-toolbar-tools">
+					<span>Azure OAuth Access</span>
+				</div>
+			</md-toolbar>
+			<md-content layout-padding>
+				<div layout="column">
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="clientID">
+							<span translate="authentication.azureAd.clientID"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="clientID" type="text" ng-model="admin.azureAd.clientID" />
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="clientSecret">
+							<span translate="authentication.azureAd.clientSecret"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="clientSecret" type="text" ng-model="admin.azureAd.clientSecret" />
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="tenant">
+							<span translate="authentication.azureAd.tenant"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="tenant" type="text" ng-model="admin.azureAd.tenant" />
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="resource">
+							<span translate="authentication.azureAd.resource"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="resource" type="text" ng-model="admin.azureAd.resource" />
+					</md-input-container>
+				</div>
+			</md-content>
+		</md-content>
+	</div>
+	<div ng-show="method == 'ldap'">
+		<md-content md-whiteframe="5">
+			<md-toolbar class="md-hue-2" style="height: 40px;min-height: 40px;">
+				<div class="md-toolbar-tools">
+					<span>LDAP Access</span>
+				</div>
+			</md-toolbar>
+			<md-content layout-padding>
+				<div layout="column">
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="url">
+							<span translate="authentication.ldapAd.url"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="url" type="text" ng-model="admin.ldapAd.url" />
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="baseDN">
+							<span translate="authentication.ldapAd.baseDN"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="baseDN" type="text" ng-model="admin.ldapAd.baseDN" />
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="username">
+							<span translate="authentication.ldapAd.username"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="username" type="text" ng-model="admin.ldapAd.username" />
+					</md-input-container>
+					<md-input-container class="md-block flex-gt-sm" style="margin-bottom: 0;">
+						<label for="password">
+							<span translate="authentication.ldapAd.password"></span>
+							<span style="color: red">*</span>
+						</label>
+						<input id="password" type="text" ng-model="admin.ldapAd.password" />
+					</md-input-container>
+				</div>
+            </md-content>
+        </md-content>
+                <md-content md-whiteframe="5">
+            <md-toolbar class="md-hue-2" style="height: 40px;min-height: 40px;">
+				<div class="md-toolbar-tools">
+					<span>User Groups</span>
+				</div>
+            </md-toolbar>
+            <md-content layout-padding>
+						<md-list flex>
+							<md-divider></md-divider>
+							<md-list-item ng-repeat="row in admin.ldapAd.groups" layout="row">
+								<md-button class="md-primary" ng-click="removeRow(row.index)">
+									<i class="material-icons">remove_circle_outline</i>
+								</md-button>
+								<md-input-container class="md-block" flex="20">
+									<label for="icon-{{$index}}" translate="config.ldapGroup"></label>
+									<input id="icon-{{$index}}" type="text" ng-model="row.group">
+								</md-input-container>
+								<span flex="10"></span>
+								<md-input-container class="md-block" flex="40">
+                                    <label translate="config.userGroup"></label>
+                                    <md-select ng-model="row.userGroupId" ng-selected="row.userGroupId">
+                                        <md-option ng-repeat='userGroup in userGroups' value="{{userGroup.id}}">{{userGroup.name}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+								
+								<md-divider></md-divider>
+							</md-list-item>
+						</md-list>
+					
+						<md-button class="md-primary" ng-click="addRow()" >
+							<i class="material-icons">add_circle_outline</i>
+						</md-button>
+            </md-content>
+        </md-content>
+    </div>
+        
+        
+    <div ng-show="method == 'social'"></div>
+	<fieldset ng-show="method=='adfs'">
+		<legend> {{"authentication.adfs.params" | translate}}</legend>
+		Not yet available...
+	</fieldset>
+	<md-content layout="column" layout-gt-sm="row">
+		<md-button class="md-primary md-raised" ng-disabled="isWorking || !isValid()" ng-click="save()" translate="save" aria-label="get"></md-button>
+	</md-content>
+</md-content>

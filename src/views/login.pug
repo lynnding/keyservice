@@ -1,0 +1,190 @@
+doctype html
+html
+    head
+        title= title
+        // [if IE]
+        meta(http-equiv="X-UA-Compatible" content="IE=10; IE=EDGE")
+        // [endif]
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+
+        link(rel='stylesheet' href='/css/ah-tm.tags.css')
+        link(rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css")
+        link(rel='stylesheet' href='/css/ah-tm.login.css')
+        link(rel="stylesheet" href="/bower_components/material-design-icons/iconfont/material-icons.css")
+
+        script(type="text/javascript").
+            function fadeIn(element){  
+                var i = 1;
+                var f = 0.5;  
+                setTimeout(function(){
+                    element.style.opacity = parseFloat(element.style.opacity) - (f * i * i);
+                    i++;
+                    if (element.style.opacity < 0 || i > 50) element.parentNode.removeChild(element);
+                    else fadeIn(element);
+                    }, 40);
+            }
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var element = document.getElementById("loading"); 
+                element.style.opacity = 1.0;                
+                fadeIn(element);
+            });
+
+
+    body(ng-app="login" ng-controller="LoginCtrl").icons-docs
+        div(id="loading")
+                        
+        header.md-page-header
+            div.header
+            md-toolbar.header.fixed(layout='row')
+                h1.logo.md-toolbar-tools
+                    if custom && custom.logo && custom.logo.enable
+                        img(src=custom.logo.header class="ah-logo")
+                    else
+                        img(src="/images/logo_w.png" alt="Aerohive")
+                span(flex)
+                
+                div(style="display:flex; padding-right: 20px")
+                    md-menu(style="margin: auto;")
+                        md-button(aria-label="language" ng-click="openMenu($mdOpenMenu, $event)" style="min-width: 20px;")
+                            md-tooltip(md-direction="bottom" md-visible="tooltipVisible") {{"language" | translate}}
+                            md-icon(class="material-icons" aria-label="language") language
+                        if ! custom || ! custom.login || ! custom.login.enable
+                            md-menu-content
+                                md-menu-item
+                                    md-button(ng-click="translate('en')")
+                                        span(style="display: inline-flex; margin-right: 5px;")
+                                            div.iti-flag.gb
+                                        span English
+                                md-menu-item
+                                    md-button(ng-click="translate('fr')")
+                                        span(style="display: inline-flex; margin-right: 5px;")
+                                            div.iti-flag.fr
+                                        span Francais                                
+        div.page-footer
+            span © 2017 Aerohive Networks. All Rights Reserved.
+
+            md-button(aria-label="settings" href=oauthUrl style="margin: auto; display: inline-flex;")   
+                md-tooltip(md-direction="top" md-visible="tooltipVisible") {{"settings" | translate}}                     
+                md-icon(class="material-icons" aria-label="menu") settings
+
+
+        div(layout="column" layout-align="center center" layout-gt-sm="row" layout-align-gt-sm="center start")
+            //guest Accesss
+            if guestreg  
+             div.panel(style="max-width: 450px; width: 100%;" )
+                div.inside(md-whiteframe="5" style="width: 100%" )
+                    md-toolbar
+                        div.md-toolbar-tools
+                            if custom && custom.login && custom.login.enable
+                                h2=custom.login.title
+                            else
+                                h2(translate="login.guest3")
+                
+                    md-content(layout="column" layout-padding)
+                        div(style="margin: auto; width: 100%; text-align: center;")
+                            p(style="margin-bottom:3%")
+                                | The key request has been submitted and is pending approval by the Aerohive Sponsor.
+                            p(style="margin-bottom:3%")
+                                | An email/SMS with a Wi-Fi key and instructions will be sent to the email/phone provided.
+                                
+            else 
+             div.panel(style="max-width: 450px; width: 100%;")
+                div.inside(md-whiteframe="5" style="width: 100%" )
+                    md-toolbar
+                        div.md-toolbar-tools
+                            if custom && custom.login && custom.login.enable
+                                h2=custom.login.title
+                            else
+                               h2(translate="login.title")
+                    md-content(layout="column" layout-padding)
+                     div(style="margin: auto; width: 100%; text-align: center;")
+                        if auth==='ldap'
+                            form(method='POST' action=method layout-padding)
+                                div.form-group
+                                    select(name="department" required) 
+                                        option(value='' selected) Select Your Department
+                                        each item in groups
+                                            option(value=item) #{item.group}
+                                        
+                                div.form-group
+                                input.form-control(type='text' id='username' placeholder='username' name='username' required)
+                                div.form-group
+                                input.form-control(type='password' id='password' placeholder='password' name='password' required)
+                                p
+                                    |By clicking on Accept &amp; Sign In, you agree to the Aerohive Networks Wi-Fi 
+                                    a(href="http://www.aerohive.com/legal/terms-of-use.html") Terms &amp; Conditions
+                                
+                                div.form-group
+                                md-button.md-raised.md-primary(type='submit') Accept & Sign In
+                        else if method
+                            if custom && custom.login && custom.login.enable
+                                div=custom.login.text
+                            else                          
+                                div(translate="login.instruction")
+                            br                    
+                            md-button.md-raised.md-primary(href=method translate="login.connect" aria-label="connect" style="margin: auto; width: 90%; max-width: 450px; margin-bottom: 10px;")
+                        else 
+                            div Please contact your administrator to get your login URL...
+            
+
+            //guest Accesss
+            if method  
+             div.panel(style="max-width: 450px; width: 100%;" )
+                div.inside(md-whiteframe="5" style="width: 100%" )
+                    md-toolbar
+                        div.md-toolbar-tools
+                            if custom && custom.login && custom.login.enable
+                                h2=custom.login.title
+                            else
+                                h2(translate="login.guest")
+                    md-content(layout="column" layout-padding)
+                        div(style="margin: auto; width: 100%; text-align: center;")
+                            p Use this if you require more than one day of Wi-Fi access to select Aerohive Wi-Fi Resources. Privileges can be provided on-site or in advance.
+                            form(method='POST' action=guest)
+                                div.form-group
+                                input.form-control(type='text' id='name' placeholder='Guest name' name='name' required)
+                                div.form-group
+                                input.form-control(type='email' id='email' placeholder='Guest email' name='email' required)
+                                div.form-group
+                                input.form-control(type='tel' id='phone' placeholder='Guest Mobile Phone' name='phone' required)
+                                div.form-group
+                                input.form-control(type='email' id='purpose' placeholder='Sponsor Email' name='purpose' required)
+                                div.form-group
+                                md-button.md-raised.md-primary(type='submit') Submit Request
+                
+             div.panel(style="max-width: 450px; width: 100%;" )
+                div.inside(md-whiteframe="5" style="width: 100%" )
+                    md-toolbar
+                        div.md-toolbar-tools
+                            if custom && custom.login && custom.login.enable
+                                h2=custom.login.title
+                            else
+                                h2(translate="login.guest2")
+                
+                    md-content(layout="column" layout-padding)
+                        div(style="margin: auto; width: 100%; text-align: center;")
+                            p(style="margin-bottom:3%")
+                                | Enjoy access to our Aerohive Guest Wi-Fi Network.
+                                | By clicking on Accept &amp; Connect, you agree to the Aerohive Networks Guest Wi-Fi 
+                                a(href="http://www.aerohive.com/legal/terms-of-use.html") Terms &amp; Conditions.
+                            form(method='POST' name='weblogin' action='http://1.1.1.1/reg.php')
+                            //form(method='POST' name='weblogin' action='api/rec')
+                                div.form-group
+                                input.form-control(type='hidden' name='autherr' value='0')
+                                input.form-control(type='hidden' name='url' value=url)
+                                md-button.md-raised.md-primary(type='submit') Accept & Connect
+
+                        
+        script(src="/i18n/login/en.js")
+        script(src="/i18n/login/fr.js")
+        script(src="/custom/colors")
+        script(src="/bower_components/angular/angular.min.js")
+        script(src="/bower_components/angular-aria/angular-aria.js")
+        script(src="/bower_components/angular-animate/angular-animate.min.js")
+        script(src="/bower_components/angular-material/angular-material.js")
+        script(src="/bower_components/angular-messages/angular-messages.js")
+        script(src="/bower_components/angular-route/angular-route.min.js")
+        script(src="/bower_components/angular-messages/angular-messages.js")
+        script(src="/bower_components/angular-translate/angular-translate.min.js")
+        script(src="/bower_components/angular-sanitize/angular-sanitize.min.js")
+        script(src="/web-app/login.js")

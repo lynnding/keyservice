@@ -1,0 +1,4 @@
+src/bower_components
+src/node_modules
+src/config.js
+src/certs/*

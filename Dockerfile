@@ -1,4 +1,4 @@
-FROM node:boron
+FROM node
 LABEL com.aerohive.keyservice.version="0.1"
 LABEL com.aerohive.keyservice.release-date="2017-10-11"
 

@@ -84,7 +84,7 @@ router.get("/logout/", function (req, res) {
         req.logout();
         req.session.destroy();
     } else if (req.session.account.authMethod == 'ldap') {
-            //console.info("\x1b[32minfo\x1b[0m:", 'Session ID ', req.session.account._id);
+            console.info("\x1b[32minfo\x1b[0m:", 'Session ID ', req.session.account._id);
             var redirecturi = "/login/" + req.session.account._id + "/";
             req.logout();
             req.session.destroy(); 

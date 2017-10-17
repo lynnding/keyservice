@@ -1,16 +1,16 @@
-# keyservice
-This application provides a single page app to get a PPSK from HMNG service. This App can use AzureAD or ADFS (soon) to authenticate users.
+#kyservice 
+This application provides a single page app to get a PPSK from HMNG service. This App can use LDAP AD to authenticate users.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-![keyservice](https://github.com/lynnding/keyservice/blob/master/get-a-key.png?raw=true)
+![keyiservice](https://github.com/lynnding/keyservice/blob/master/get-a-key.png?raw=true)
 
 # keyservice v1
 * full user interface customization
 * full configuration interface
-* AzureAD integration
+* LDAP integration
 * Docker version (deployement script available below) with NGINX and Let's Encrypt
 
 ## Install
@@ -35,7 +35,7 @@ If you want to use OAuth authentication, the application will need to use HTTPS.
 * Start the APP with `www_with_https`. 
 
 ### Docker Image
-You can easily deploy this application with [Docker](https://www.docker.com/). The image is publicly available on Docker Hub at https://hub.docker.com/r/lynnding/keyservice/.
+You can easily deploy this application with [Docker](https://www.docker.com/). The image is publicly available on Docker Hub at https://hub.docker.com/r/weilinding/keyservice/.
 In this case, you can choose to manually deploy the image and create the container, or you can use the automation script (for Linux).
 
 #### Automation Script
@@ -44,7 +44,7 @@ The Automation script will allow you to easily
 * Manage HTTPS certificates with self-signed certificates or with let's encrypt image (the script will automatically download and deploy the let's encrypt container if needed)
 * Download and Deploy dependencies, like NGINX and MongoDB container
 * Download, Deploy, Update the application container
-To use this script, just download it [here](https://raw.githubusercontent.com/lynnding/keyservice/master/get-a-key.sh), and run it in a terminal.
+To use this script, just download it [here](https://raw.githubusercontent.com/lynnding/keyservice/master/keyservice.sh), and run it in a terminal.
 
 #### Manual deployment
 If you are manually deploying this container, you will need to a reverse proxy to manage HTTPS.

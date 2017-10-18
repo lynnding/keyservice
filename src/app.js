@@ -31,7 +31,7 @@ db.once('open', function () {
 });
 
 // connect to mongodb
-mongoose.connect('mongodb://' + mongoConfig.host + '/' + mongoConfig.base);
+mongoose.connect('mongodb://' + mongoConfig.host + '/' + mongoConfig.base , { useMongoClient: true });
 
 
 //===============APP=================

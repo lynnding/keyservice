@@ -537,7 +537,16 @@ router.post('/:account_id', function (req, res) {
                                 })
                             })
                         } else if (err) res.status(500).json({ error: err });
-                        else res.status(200).json({ action: "create", email: req.session.email, status: 'done', result: result });
+			else {
+                                            res.render("login", {
+                                                    guestreg : 'yes',
+                                                    action: "create",
+                                                    email: req.session.email, 
+                                                    status: 'deleted_and_done', 
+                                                    result: result 
+                                                });
+			}
+                        //else res.status(200).json({ action: "create", email: req.session.email, status: 'done', result: result });
                         
                        
                     })

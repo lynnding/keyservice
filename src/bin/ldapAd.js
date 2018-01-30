@@ -65,7 +65,7 @@ module.exports = function (req, res, next) {
                             bindDn: 'cn='+account.ldapAd.username+',' +account.ldapAd.baseDN,
                             bindCredentials: account.ldapAd.password,
                             searchBase: account.ldapAd.baseDN,
-                            searchFilter: '(&(department='+ JSON.parse(req.body.department).group +')(|(uid={{username}})(cn={{username}})))'
+                            searchFilter: '(&(department='+ JSON.parse(req.body.department).group +')(|(uid={{username}})(sAMAccountName={{username}})(userPrincipalName={{username}})))'
                             //searchFilter: '(&(department='+ req.body.department +')(|(uid={{username}})(cn={{username}})))'
                             }
                         };
